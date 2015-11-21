@@ -784,6 +784,9 @@ var resumeWaitingMethods = function resumeWaitingMethods() {
 
   // If no waiting methods - then we must be done?
   if (!_methodsResumed && !waitingMethods.length || !resumeAttemptsLeft) {
+    if (!resumeAttemptsLeft && waitingMethods.length) {
+      Ground.emit('warn', { message: 'No method resume attempts left. ' + waitingMethods.length + ' methods did not resume.' });
+    }
     // Methods have resumed
     _methodsResumed = true;
     _methodsResumedDeps.changed();
